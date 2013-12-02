@@ -49,6 +49,8 @@ I like to create a console application in my solution that contains the Create/U
 
 Note that I have Psake set up to build the code, run the (limited) unit tests, create the nuget package, and zip it all up.  This is designed to work with Visual Studio 2013 and SQL Server 2012. It should work against SQL Server 2008 and will compile against older Visual Studio versions with a change in the /p:VisualStudioVersion= setting in default.ps1.
 
+I posted some details on why I did this on our office blog at http://sharpcoders.org/post/Introducing-DatabaseDeployer
+
 
 Install it via Nuget at https://www.nuget.org/packages/DatabaseDeployer/2.0.0.1202
 
