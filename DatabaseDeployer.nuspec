@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata schemaVersion="2">
+    <id>DatabaseDeployer</id>
+    <version>2.0.0.0</version>
+    <title>Database Deployer</title>
+    <authors>Eric Coffman</authors>
+    <owners>Eric Coffman</owners>
+    <licenseUrl>http://github.com/ericdc1/databasedeployer</licenseUrl>
+    <projectUrl>http://github.com/ericdc1/databasedeployer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Command line database change management tool</description>
+    <summary>Command line database change management tool</summary>
+    <tags>Database, change management</tags>
+    <frameworkAssemblies>
+    </frameworkAssemblies>
+    <releaseNotes>
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="build\build\package\DatabaseDeployer\DatabaseDeployer.exe" target="lib\net40" />
+    <file src="build\build\package\DatabaseDeployer\DatabaseDeployer.pdb" target="lib\net40" />
+  </files>
+</package>

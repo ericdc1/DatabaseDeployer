@@ -1,0 +1,1 @@
+start .\source\DatabaseDeployer.sln
