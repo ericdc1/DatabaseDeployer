@@ -18,7 +18,7 @@
     </releaseNotes>
   </metadata>
   <files>
-    <file src="build\build\package\DatabaseDeployer\DatabaseDeployer.exe" target="lib\net40" />
-    <file src="build\build\package\DatabaseDeployer\DatabaseDeployer.pdb" target="lib\net40" />
+    <file src="build\package\DatabaseDeployer\DatabaseDeployer.exe" target="lib\net40" />
+    <file src="build\package\DatabaseDeployer\DatabaseDeployer.pdb" target="lib\net40" />
   </files>
 </package>

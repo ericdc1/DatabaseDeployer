@@ -11,7 +11,7 @@ properties {
 	$source_dir = "$base_dir\source"
     $unitTestAssembly = "$projectName.UnitTests.dll"
     $nunitPath = "$source_dir\packages\NUnit.Runners.2.6.3\tools\"
-	$build_dir = "$base_dir\build\build"
+	$build_dir = "$base_dir\build"
 	$test_dir = "$build_dir\test"
 	$testCopyIgnorePath = "_ReSharper"
 	$package_dir = "$build_dir\package"	
@@ -62,21 +62,21 @@ task UpdateAssemblyInfo {
 }
 
 task RebuildDatabase {
-    exec { & $base_dir\build\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+    exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
 }
 
 task UpdateDatabase {
     try{
-        exec { & $base_dir\build\DatabaseDeployer\DatabaseDeployer.exe Update $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+        exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Update $databaseServer "$databaseName" "$databaseScripts\Scripts"}
     }
     catch{
         write-host "Database does not exist - running rebuild"
-        exec { & $base_dir\build\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+        exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
     }
 }
 
 task SeedDatabase { 
-    exec { & $base_dir\build\DatabaseDeployer\DatabaseDeployer.exe Seed $databaseServer " $databaseName" "$databaseScripts\Scripts"}
+    exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Seed $databaseServer " $databaseName" "$databaseScripts\Scripts"}
 }
 
 task Package -depends Compile {
@@ -89,7 +89,7 @@ task Package -depends Compile {
     write-host "Copy in database scripts"
     copy_files "$databaseScripts\scripts" "$package_dir\database\"
     write-host "Copy DatabaseDeployer tool so scripts can be ran"
-    copy_files "$base_dir\build\DatabaseDeployer"  "$package_dir\database\"  "$package_dir\database\"
+    copy_files "$base_dir\lib\DatabaseDeployer"  "$package_dir\database\"  "$package_dir\database\"
     write-host "Create batch file to run db updates"
     create-dbdeployscript("$package_dir\database\_Update-Database.bat")
  
@@ -99,7 +99,7 @@ task Package -depends Compile {
  
  task NugetPack -depends Package {
   exec {
-    & $base_dir\build\ilmerge.exe /target:exe /lib:C:\Windows\Microsoft.NET\Framework\v4.0.30319 /targetplatform:v4 /out:$package_dir\DatabaseDeployer\DatabaseDeployer.exe $package_dir\DatabaseDeployer\DatabaseDeployer.console.exe $package_dir\DatabaseDeployer\DatabaseDeployer.core.dll  
+    & $base_dir\lib\ilmerge.exe /target:exe /lib:C:\Windows\Microsoft.NET\Framework\v4.0.30319 /targetplatform:v4 /out:$package_dir\DatabaseDeployer\DatabaseDeployer.exe $package_dir\DatabaseDeployer\DatabaseDeployer.console.exe $package_dir\DatabaseDeployer\DatabaseDeployer.core.dll  
     }
  exec {
     & $source_dir\.nuget\nuget.exe pack -Version $version -outputdirectory $build_dir $base_dir\DatabaseDeployer.nuspec
@@ -110,7 +110,7 @@ function global:zip_directory($directory,$file) {
     write-host "Zipping folder: " $test_assembly
     delete_file $file
     cd $directory
-    & "$base_dir\build\7zip\7za.exe" a -mx=9 -r $file
+    & "$base_dir\lib\7zip\7za.exe" a -mx=9 -r $file
     cd $base_dir
 }
 

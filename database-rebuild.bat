@@ -1,1 +1,1 @@
-powershell.exe -NoProfile -ExecutionPolicy unrestricted -Command "& { Import-Module '.\build\psakev4\psake.psm1'; Invoke-psake RebuildDatabase;  }" 
+powershell.exe -NoProfile -ExecutionPolicy unrestricted -Command "& { Import-Module '.\lib\psakev4\psake.psm1'; Invoke-psake RebuildDatabase;  }" 
