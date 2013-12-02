@@ -44,6 +44,12 @@ Logs to usd_AppliedDatabaseScript
 DatabaseDeployer.exe Baseline .\sqlexpress ./scripts  
 ```
 
+
+I like to create a console application in my solution that contains the Create/Update/Seed folders and a simple program to execute DatabaseDeployer.exe from Visual Studio. Here is an example of this https://github.com/ericdc1/DatabaseDeployer/blob/master/source/Database/Program.cs  I suggest downloading the code to give it a try.
+
+Note that I have Psake set up to build the code, run the (limited) unit tests, create the nuget package, and zip it all up.  This is designed to work with Visual Studio 2013 and SQL Server 2012. It should work against SQL Server 2008 and will compile against older Visual Studio versions with a change in the /p:VisualStudioVersion= setting in default.ps1.
+
+
 Install it via Nuget at https://www.nuget.org/packages/DatabaseDeployer/2.0.0.1202
 
 Or download it via Github releases at https://github.com/ericdc1/DatabaseDeployer/releases
