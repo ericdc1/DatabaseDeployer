@@ -21,10 +21,11 @@ namespace Database
                 {
                     const string localdb = ".\\sqlexpress";
                     const string databaseName = "Demo";
+                    const string databaseDeployerVersion = "2.0.0.1202";
                     var currentDirectory = new DirectoryInfo(Environment.CurrentDirectory);
                     var parentDirectory = currentDirectory.Parent.Parent.FullName;
                     var scriptspath = parentDirectory + "\\scripts\\";
-                    var deployerpath = parentDirectory + "\\databasedeployer\\databasedeployer.exe";
+                    var deployerpath = currentDirectory.Parent.Parent.Parent.FullName + "\\packages\\DatabaseDeployer."+ databaseDeployerVersion + "\\tools\\databasedeployer.exe";
                     var p = new Process();
 
                     switch (selector)

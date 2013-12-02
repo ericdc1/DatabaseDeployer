@@ -45,20 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="DatabaseDeployer\DatabaseDeployer.exe.config" />
-    <None Include="DatabaseDeployer\DatabaseDeployer.vshost.exe.config" />
-    <None Include="DatabaseDeployer\DatabaseDeployer.vshost.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseDeployer\DatabaseDeployer.Core.dll" />
-    <Content Include="DatabaseDeployer\DatabaseDeployer.Core.pdb" />
-    <Content Include="DatabaseDeployer\DatabaseDeployer.exe" />
-    <Content Include="DatabaseDeployer\DatabaseDeployer.pdb" />
-    <Content Include="DatabaseDeployer\DatabaseDeployer.vshost.exe" />
-    <Content Include="DatabaseDeployer\Microsoft.SqlServer.batchparser.dll" />
-    <Content Include="DatabaseDeployer\Microsoft.SqlServer.ConnectionInfo.dll" />
-    <Content Include="DatabaseDeployer\Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
-    <Content Include="DatabaseDeployer\Microsoft.SqlServer.Smo.dll" />
     <Content Include="Scripts\Update\0001_add_table.sql" />
     <Content Include="Scripts\Seed\0001-Start.sql" />
   </ItemGroup>

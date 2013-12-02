@@ -6,11 +6,11 @@
     <title>Database Deployer</title>
     <authors>Eric Coffman</authors>
     <owners>Eric Coffman</owners>
-    <licenseUrl>http://github.com/ericdc1/databasedeployer</licenseUrl>
+    <licenseUrl>http://github.com/ericdc1/databasedeployer/license.txt</licenseUrl>
     <projectUrl>http://github.com/ericdc1/databasedeployer</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Command line database change management tool</description>
-    <summary>Command line database change management tool</summary>
+    <summary></summary>
     <tags>Database, change management</tags>
     <frameworkAssemblies>
     </frameworkAssemblies>
@@ -18,7 +18,7 @@
     </releaseNotes>
   </metadata>
   <files>
-    <file src="build\package\DatabaseDeployer\DatabaseDeployer.exe" target="lib\net40" />
-    <file src="build\package\DatabaseDeployer\DatabaseDeployer.pdb" target="lib\net40" />
+    <file src="build\package\DatabaseDeployer\DatabaseDeployer.exe" target="tools\DatabaseDeployer.exe" />
+    <file src="build\package\DatabaseDeployer\DatabaseDeployer.pdb" target="tools\DatabaseDeployer.pdb" />
   </files>
 </package>

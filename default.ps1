@@ -11,6 +11,7 @@ properties {
 	$source_dir = "$base_dir\source"
     $unitTestAssembly = "$projectName.UnitTests.dll"
     $nunitPath = "$source_dir\packages\NUnit.Runners.2.6.3\tools\"
+    $databasedeployerPath = "$source_dir\packages\DatabaseDeployer.2.0.0.1202\tools\"
 	$build_dir = "$base_dir\build"
 	$test_dir = "$build_dir\test"
 	$testCopyIgnorePath = "_ReSharper"
@@ -62,21 +63,21 @@ task UpdateAssemblyInfo {
 }
 
 task RebuildDatabase {
-    exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+    exec { & $databasedeployerPath\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
 }
 
 task UpdateDatabase {
     try{
-        exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Update $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+        exec { & $databasedeployerPath\DatabaseDeployer.exe Update $databaseServer "$databaseName" "$databaseScripts\Scripts"}
     }
     catch{
         write-host "Database does not exist - running rebuild"
-        exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
+        exec { &  $databasedeployerPath\DatabaseDeployer.exe Rebuild $databaseServer "$databaseName" "$databaseScripts\Scripts"}
     }
 }
 
 task SeedDatabase { 
-    exec { & $base_dir\lib\DatabaseDeployer\DatabaseDeployer.exe Seed $databaseServer " $databaseName" "$databaseScripts\Scripts"}
+    exec { &  $databasedeployerPath\DatabaseDeployer.exe Seed $databaseServer " $databaseName" "$databaseScripts\Scripts"}
 }
 
 task Package -depends Compile {
@@ -89,10 +90,12 @@ task Package -depends Compile {
     write-host "Copy in database scripts"
     copy_files "$databaseScripts\scripts" "$package_dir\database\"
     write-host "Copy DatabaseDeployer tool so scripts can be ran"
-    copy_files "$base_dir\lib\DatabaseDeployer"  "$package_dir\database\"  "$package_dir\database\"
-    write-host "Create batch file to run db updates"
-    create-dbdeployscript("$package_dir\database\_Update-Database.bat")
- 
+    copy_files "$databasedeployerPath"  "$package_dir\database\"
+    write-host "Create batch files to run db updates"
+    create-dbdeployscript "Update" "$package_dir\database\_Update-Database.bat"
+    create-dbdeployscript "Rebuild" "$package_dir\database\_Rebuild-Database.bat"
+    create-dbdeployscript "Baseline"  "$package_dir\database\_Baseline-Database.bat"
+    create-dbdeployscript "Seed" "$package_dir\database\_Seed-Database.bat"
     write-host "Zip it up"
 	zip_directory $package_dir $package_file 
 }
@@ -151,14 +154,12 @@ function global:create_directory($directory_name)
   mkdir $directory_name  -ErrorAction SilentlyContinue  | out-null
 }
 
-
-
-function create-dbdeployscript($filename)
+function create-dbdeployscript($verb, $filename)
 { 
 "@echo off
 set /p serverName=""DB Server: "" %=%
-DatabaseDeployer.exe Update %serverName% $databaseName . 
-pause"  | out-file $filename -encoding "ASCII"       
+DatabaseDeployer.exe $verb %serverName% $databaseName . 
+pause" | out-file $filename -encoding "ASCII"       
 }
 
 
