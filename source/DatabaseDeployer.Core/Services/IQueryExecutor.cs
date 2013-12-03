@@ -7,5 +7,6 @@ namespace DatabaseDeployer.Core.Services
 		void ExecuteNonQuery(ConnectionSettings settings, string sql, bool runAgainstSpecificDatabase);
 		int ExecuteScalarInteger(ConnectionSettings settings, string sql);
 		string[] ReadFirstColumnAsStringArray(ConnectionSettings settings, string sql);
+	    bool CheckDatabaseExists(ConnectionSettings settings);
 	}
 }

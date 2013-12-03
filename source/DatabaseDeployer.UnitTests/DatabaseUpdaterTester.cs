@@ -16,17 +16,19 @@ namespace DatabaseDeployer.UnitTests.Core.DatabaseManager.Services
             var taskAttributes = new TaskAttributes(settings, "c:\\scripts");
 
 			var mocks = new MockRepository();
-            var executor = mocks.StrictMock<IScriptFolderExecutor>();
-            var taskObserver = mocks.StrictMock<ITaskObserver>();
+            var scriptfolderexecutor = mocks.StrictMock<IScriptFolderExecutor>();
+            var queryexecutor = mocks.StrictMock<IQueryExecutor>();
+            queryexecutor.Stub(x => x.CheckDatabaseExists(taskAttributes.ConnectionSettings)).Return(true);
 
+            var taskObserver = mocks.StrictMock<ITaskObserver>();
 			using (mocks.Record())
 			{
-				executor.ExecuteScriptsInFolder(taskAttributes, "Update", taskObserver);
+                scriptfolderexecutor.ExecuteScriptsInFolder(taskAttributes, "Update", taskObserver);
 			}
 
 			using (mocks.Playback())
 			{
-				IDatabaseActionExecutor updater = new DatabaseUpdater(executor);
+				IDatabaseActionExecutor updater = new DatabaseUpdater(scriptfolderexecutor, queryexecutor);
                 updater.Execute(taskAttributes, taskObserver);
 			}
 

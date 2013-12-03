@@ -54,9 +54,6 @@ namespace DatabaseDeployer.Console
                     ex = ex.InnerException;    
                 } while (ex!=null);
 
-                //Log(exception.ToString());
-                
-
             }
             return false;
         }

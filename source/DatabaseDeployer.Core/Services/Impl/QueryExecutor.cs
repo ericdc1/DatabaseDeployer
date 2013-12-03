@@ -32,7 +32,7 @@ namespace DatabaseDeployer.Infrastructure.DatabaseManager.DataAccess
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand())
+                using (var command = new SqlCommand())
                 {
                     command.Connection = connection;
 
@@ -53,7 +53,7 @@ namespace DatabaseDeployer.Infrastructure.DatabaseManager.DataAccess
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand())
+                using (var command = new SqlCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = sql;
@@ -70,7 +70,7 @@ namespace DatabaseDeployer.Infrastructure.DatabaseManager.DataAccess
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand())
+                using (var command = new SqlCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = sql;
@@ -104,5 +104,32 @@ namespace DatabaseDeployer.Infrastructure.DatabaseManager.DataAccess
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => x.Trim(' ', '\r', '\n'));
         }
+
+        public bool CheckDatabaseExists(ConnectionSettings settings)
+        {
+            bool result;
+            var tmpConn = new SqlConnection(_connectionStringGenerator.GetConnectionString(settings, false));
+            try
+            {
+                string sqlCreateDbQuery = string.Format("SELECT database_id FROM sys.databases WHERE Name = '{0}'", settings.Database);
+                using (tmpConn)
+                {
+                    using (var sqlCmd = new SqlCommand(sqlCreateDbQuery, tmpConn))
+                    {
+                        tmpConn.Open();
+                        var databaseId = (int)sqlCmd.ExecuteScalar();
+                        tmpConn.Close();
+
+                        result = (databaseId > 0);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+            return result;
+        }
+
     }
 }

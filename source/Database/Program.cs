@@ -12,6 +12,7 @@ namespace Database
             // Change to your number of menuitems.
             const int maxMenuItems = 4;
             var selector = 0;
+            Console.Title = "Database Deployer VS Runner";
             while (selector != maxMenuItems)
             {
                 Console.Clear();
